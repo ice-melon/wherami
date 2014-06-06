@@ -1,6 +1,7 @@
 SampleApp::Application.routes.draw do
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
+  resources :apps
   
   root 'static_pages#home'
   
@@ -36,7 +37,7 @@ SampleApp::Application.routes.draw do
   #     end
   #
   #     collection do
-  #       get 'sold'
+  #       appsget 'sold'
   #     end
   #   end
 

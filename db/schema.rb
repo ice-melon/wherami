@@ -11,7 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140604090313) do
+ActiveRecord::Schema.define(version: 20140606060726) do
+
+  create_table "apps", force: true do |t|
+    t.string   "app_name"
+    t.string   "package_name"
+    t.string   "app_description"
+    t.string   "fingerprint"
+    t.string   "website"
+    t.string   "team_name"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "status",          default: false
+  end
+
+  add_index "apps", ["app_name"], name: "index_apps_on_app_name", unique: true
 
   create_table "users", force: true do |t|
     t.string   "name"

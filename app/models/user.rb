@@ -1,4 +1,7 @@
 class User < ActiveRecord::Base
+	has_many :apps, dependent: :destroy
+
+
 	before_save {self.email = email.downcase}
 	before_create :create_remember_token
 
@@ -15,7 +18,7 @@ class User < ActiveRecord::Base
 	end
 
 	def User.digest(token)
-		Digest::SHA1.hexdigest(token.to_s)
+	  Digest::SHA1.hexdigest(token.to_s)
 	end
 
 	private

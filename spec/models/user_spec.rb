@@ -15,6 +15,8 @@ describe User do
   it { should respond_to(:password_confirmation) }
   it { should respond_to(:remember_token) }
   it { should respond_to(:authenticate) }
+  it { should respond_to(:admin) }
+  it { should respond_to(:apps) }
 
   it { should be_valid }
   it { should_not be_admin }
@@ -100,4 +102,27 @@ describe User do
     before { @user.save }
     its(:remember_token) { should_not be_blank }
   end
+
+  #association
+
+  describe "app associations" do
+    before { @user.save }
+    let!(:first_app) do
+      FactoryGirl.create(:app, user: @user);
+    end
+
+    it "should destroy associated microposts" do
+        apps = @user.apps.to_a
+        @user.destroy
+        expect(apps).not_to be_empty
+        apps.each do |app|
+          expect(App.where(id: app.id)).to be_empty
+        end
+    end
+    
+  end
+
+
+
+
 end

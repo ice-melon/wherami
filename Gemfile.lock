@@ -167,11 +167,11 @@ DEPENDENCIES
   capybara (= 2.1.0)
   childprocess (= 0.5.3)
   factory_girl_rails (= 4.2.1)
-  faker (= 1.1.2)
+  faker
   growl (= 1.0.3)
   jbuilder (= 1.0.2)
   jquery-rails (= 3.0.4)
-  pg (= 0.15.1)
+  pg
   rails (= 4.0.5)
   rails_12factor (= 0.0.2)
   rspec-rails (= 2.13.1)

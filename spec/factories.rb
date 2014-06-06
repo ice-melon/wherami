@@ -10,4 +10,10 @@ FactoryGirl.define do
       admin true
     end
   end
+
+  factory :app do
+  	app_name "beatQQ"
+  	app_description "beatGG"
+  	user
+  end
 end

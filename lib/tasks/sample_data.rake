@@ -15,5 +15,25 @@ namespace :db do
                    password: password,
                    password_confirmation: password)
     end
+
+    users = User.all(limit: 6)
+    prefix = 1;
+    2.times do
+      app_name = Faker::Name.first_name
+      package_name = Faker::Address.city
+      app_description = Faker::Lorem.sentence
+      website = Faker::Internet.url
+      team_name = Faker::Company.name
+      users.each { 
+        |user| user.apps.create!(app_name:(app_name + "-#{prefix}"),
+                                            package_name: package_name,
+                                            app_description: app_description,
+                                            website: website,
+                                            team_name: team_name)
+        prefix += 1
+
+      }
+
+    end
   end
 end

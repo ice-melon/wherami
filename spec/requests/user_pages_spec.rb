@@ -6,6 +6,8 @@ describe "User pages" do
 
   describe "profile page" do
 	  let(:user) { FactoryGirl.create(:user) }
+    let!(:a1) {FactoryGirl.create(:app,user: user, app_name: "foo") }
+    let!(:a2) {FactoryGirl.create(:app,user: user, app_name: "bar") }
     before { sign_in(user) }
 	  before { visit user_path(user) }
 
