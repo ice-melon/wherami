@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
-   before_action :signed_in_user, only: [:edit, :update, :show, :destroy]
-   before_action :correct_user,   only: [:edit, :update]
-   before_action :admin_user,     only: :destroy
+   before_action :signed_in_user, only: [:edit, :update, :show, :destroy,:index]
+   before_action :correct_user,   only: [:edit, :update, :show]
+   before_action :admin_user,     only: [:destroy,:index]
 
   def new
   	@user = User.new
@@ -9,6 +9,7 @@ class UsersController < ApplicationController
 
   def show
   	@user = User.find(params[:id])
+    @apps = @user.apps
   end
 
   def create
@@ -37,7 +38,7 @@ class UsersController < ApplicationController
   end
 
   def index
-    @users = User.paginate(page: params[:page])
+    @users = User.paginate(page: params[:page],:per_page => 20)
   end
 
   def destroy
@@ -62,12 +63,15 @@ class UsersController < ApplicationController
     end
 
     def correct_user
-      @user = User.find(params[:id])
-      redirect_to(root_url) unless current_user?(@user)
+      if !current_user.admin?
+        @user = User.find(params[:id])
+        redirect_to(current_user) unless current_user?(@user)
+      end
+      
     end
 
     def admin_user
-      redirect_to(root_url) unless current_user.admin?
+      redirect_to(current_user) unless current_user.admin?
     end
 
 end

@@ -1,0 +1,10 @@
+<li>
+  <%= link_to app.app_name, app %>
+  <% if current_user?(find_user_by_id(app.user_id)) %>
+    | <%= link_to "edit",edit_app_path(app) %>
+  <% end %>
+  <% if current_user.admin? || current_user?(find_user_by_id(app.user_id)) %>
+    | <%= link_to "delete", app, method: :delete,
+                                  data: { confirm: "You sure?" } %>
+  <% end %>
+</li>

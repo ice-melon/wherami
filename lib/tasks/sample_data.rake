@@ -6,6 +6,13 @@ namespace :db do
                  password: "foobar",
                  password_confirmation: "foobar",
                  admin: true)
+
+    User.create!(name: "test",
+                 email: "test@test.com",
+                 password: "123123",
+                 password_confirmation: "123123",
+                 admin: false)
+
     99.times do |n|
       name  = Faker::Name.name
       email = "example-#{n+1}@railstutorial.org"
@@ -16,7 +23,7 @@ namespace :db do
                    password_confirmation: password)
     end
 
-    users = User.all(limit: 6)
+    users = User.all(limit: 30)
     prefix = 1;
     2.times do
       app_name = Faker::Name.first_name

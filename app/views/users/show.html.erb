@@ -7,5 +7,16 @@
         <%= @user.name %>
       </h1>
     </section>
+
+    <div class="span8">
+    	<%if @user.apps.any? %>
+    		<h3>Apps (<%= @user.apps.count%>)</h3>
+    		<ol class="apps">
+    			<%= render @apps %>
+    		</ol>
+    	<%end%>
+    </div>
+
+
   </aside>
 </div>  

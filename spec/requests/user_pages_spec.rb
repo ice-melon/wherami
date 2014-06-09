@@ -20,6 +20,10 @@ describe "User pages" do
 
     it { should have_content('Sign up') }
     it { should have_title(full_title('Sign up')) }
+
+    it { should have_content('foo') }
+    it { should have_content('bar') }
+
   end
 
 
@@ -96,7 +100,9 @@ describe "User pages" do
   end
 
   describe "index" do
-    let(:user) { FactoryGirl.create(:user) }
+
+
+    let(:user) { FactoryGirl.create(:admin) }
     before(:each) do
       sign_in user
       visit users_path

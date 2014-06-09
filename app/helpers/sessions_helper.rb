@@ -6,6 +6,10 @@ module SessionsHelper
     self.current_user = user
   end
 
+  def find_user_by_id(id)
+    user = User.find(id)
+  end
+
 
   def current_user=(user)
   	@current_user = user

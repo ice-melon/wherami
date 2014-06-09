@@ -44,6 +44,9 @@ describe "App Pages" do
 			end
 
 		end
-
 	end	
+
+	describe "show app" do
+		
+	end
 end
