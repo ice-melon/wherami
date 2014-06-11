@@ -34,7 +34,7 @@ class AppsController < ApplicationController
 	def update
 		@app = App.find(params[:id])
 		if @app.update_attributes(app_params)
-	      flash[:success] = "app info updated"
+	      flash[:success] = "App Info Updated"
 	      redirect_to @app
 	    else
 	      render 'edit'
@@ -42,14 +42,17 @@ class AppsController < ApplicationController
 	end
 
 	def destroy
-		App.find(params[:id]).destroy
-		flash[:success] = "App deleted"
-		if current_user.admin?
-			redirect_to apps_path
-		else
-			redirect_to current_user
-		end
-		
+		app = App.find(params[:id])
+		app.destroy
+		flash[:success] = "#{app.app_name} Deleted"
+		redirect_to :back
+	end
+
+	def changeStatus
+		@app = App.find(params[:id])
+		@app.update_attribute(:status, !@app.status)
+		flash[:success] = "#{@app.app_name}'s status change to #{@app.status}"
+		redirect_to :back
 	end
 
 

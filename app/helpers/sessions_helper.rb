@@ -50,4 +50,18 @@ module SessionsHelper
       redirect_to signin_url, notice: "Please sign in."
     end
   end
+
+  def home_path
+    if current_user?
+      if admin?
+        @home =  users_path
+      else
+        @home =  current_user
+      end
+    else
+      @home = root_path
+    end
+
+    @home
+  end
 end

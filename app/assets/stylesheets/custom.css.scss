@@ -36,6 +36,47 @@ textarea {
   }
 }
 
+
+
+.dota {
+  width:280px;
+  margin: 0 auto;
+
+  label{
+    font-size: 16px; 
+  }
+
+  .submit-button {
+    text-align: center;
+   }
+
+   .btn {
+    width:50%;
+    font-size: 18px;
+    color: #fff;
+   }
+
+   input {
+    line-height: 1.9em;
+    font-size: 18px;
+    color:#6B6A6D;
+   }   
+
+   textarea {
+    line-height: 1em;
+    font-size: 18px;
+    height: 80px;
+    color:#6B6A6D;
+   }
+
+ }
+
+ .alert{
+
+ }
+
+
+
 /* typography */
 
 h1, h2, h3, h4, h5, h6 {
@@ -69,11 +110,11 @@ p {
 #logo {
   float: left;
   margin-right: 10px;
+  margin-left: 10px;
   font-size: 1.7em;
   color: white;
-  text-transform: uppercase;
   letter-spacing: -1px;
-  padding-top: 9px;
+  padding-top: 15px;
   font-weight: bold;
   line-height: 1;
   &:hover {
@@ -81,6 +122,11 @@ p {
     text-decoration: none;
   }
 }
+
+.navbar-right {
+  padding-right: 15px;
+}
+
 
 /* footer */
 
@@ -165,16 +211,13 @@ input {
 }
 
 #error_explanation {
-  @extend .alert;
-  @extend .alert-danger;
-  width: inherit;
+  ul{
+    padding-left:20px;
+  }
 }
 
 .field_with_errors {
-  @extend .has-error;
-  display: inherit;
-  padding: inherit;
-  background-color: inherit
+  color:#ff0000;
 }
 
 /* Users index */
@@ -182,6 +225,7 @@ input {
 .users {
   list-style: none;
   margin: 0;
+  padding-left: 0px;
   li {
     overflow: auto;
     padding: 10px 0;
@@ -191,3 +235,17 @@ input {
     }
   }
 }
+
+.apps {
+}
+
+
+/*Home Page*/
+
+
+
+
+
+
+
+

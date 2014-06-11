@@ -4,7 +4,7 @@ class App < ActiveRecord::Base
 	validates :app_name, presence: true, 
 						 length: {maximum: 50},
 						 uniqueness: { case_sensitive: false }
-	validates :package_name, length: {maximum: 50}
+	validates :package_name, presence: true,length: {maximum: 50}
 	validates :app_description, presence: true, 
 								length: {maximum: 200}
 	validates :website, length: {maximum: 50}

@@ -1,10 +1,17 @@
 <% provide(:title, 'All Apps') %>
 <h1>All Apps</h1>
+<table class="apps table">
+	<thead>
+	  <tr>
+	    <th>App Name</th>
+	    <th>Status</th>
+	    <th>Delete</th>
+	  </tr>
+	</thead>
 
+	<tbody>
+  		<%= render @apps %>
+  	</tbody>
+</table>
 <%= will_paginate @apps, renderer: BootstrapPagination::Rails %>
 
-<ul class="apps">
-  <%= render @apps %>
-</ul>
-
-<%= will_paginate @apps, renderer: BootstrapPagination::Rails %>

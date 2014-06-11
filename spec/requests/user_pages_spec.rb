@@ -21,9 +21,6 @@ describe "User pages" do
     it { should have_content('Sign up') }
     it { should have_title(full_title('Sign up')) }
 
-    it { should have_content('foo') }
-    it { should have_content('bar') }
-
   end
 
 
@@ -113,13 +110,13 @@ describe "User pages" do
 
     describe "pagination" do
 
-      before(:all) { 30.times { FactoryGirl.create(:user) } }
+      before(:all) { 60.times { FactoryGirl.create(:user) } }
       after(:all)  { User.delete_all }
 
       it { should have_selector('.pagination') }
 
       it "should list each user" do
-        User.paginate(page: 1).each do |user|
+        User.paginate(page: 1,:per_page => 20).each do |user|
           expect(page).to have_selector('li', text: user.name)
         end
       end

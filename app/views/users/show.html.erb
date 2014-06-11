@@ -1,6 +1,6 @@
 <% provide(:title, @user.name) %>
-<div class="row">
-  <aside class="span4">
+<div >
+  <aside>
     <section>
       <h1>
         <%= gravatar_for @user %>
@@ -8,15 +8,13 @@
       </h1>
     </section>
 
-    <div class="span8">
+    <div >
     	<%if @user.apps.any? %>
-    		<h3>Apps (<%= @user.apps.count%>)</h3>
-    		<ol class="apps">
+    		<h3>Apps</h3>
+    		<table class="apps table">
     			<%= render @apps %>
-    		</ol>
+    		</table>
     	<%end%>
     </div>
-
-
   </aside>
 </div>  

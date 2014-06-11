@@ -1,8 +1,7 @@
-<% provide(:title, 'New API Request') %>
-<h1>New API Request</h1>
+<% provide(:title, 'New App') %>
+<h1>New App</h1>
 
-<div class="row">
-  <div class="span6 offset3">
+<div class="dota">
     <%= form_for(@app) do |f| %>
 
       <%= render 'shared/error_messages' , object: f.object %>
@@ -15,7 +14,7 @@
       <%= f.text_field :package_name %>
 
       <%= f.label :app_description %>
-      <%= f.text_field :app_description %>
+      <%= f.text_area :app_description %>
 
       <%= f.label :team_name %>
       <%= f.text_field :team_name %>
@@ -23,7 +22,8 @@
       <%= f.label :website %>
       <%= f.text_field :website %>
 
-      <%= f.submit "Submit", class: "btn btn-large btn-primary" %>
+      <div class="submit-button" >
+        <%= f.submit "Submit", class: "btn btn-large btn-primary" %>
+      </div> 
     <% end %>
-  </div>
 </div>

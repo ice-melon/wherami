@@ -1,19 +1,18 @@
 <% provide(:title, "Edit App Information") %>
 <h1>Update App Info</h1>
 
-<div class="row">
-  <div class="span6 offset3">
+<div class="dota">
     <%= form_for(@app) do |f| %>
       <%= render 'shared/error_messages', object: f.object %>
 
       <%= f.label :app_name %>
-      <%= f.text_field :app_name %>
+      <%= f.text_field :app_name,:disabled=>true %>
 
       <%= f.label :package_name %>
       <%= f.text_field :package_name %>
 
       <%= f.label :app_description %>
-      <%= f.text_field :app_description %>
+      <%= f.text_area :app_description %>
 
       <%= f.label :website %>
       <%= f.text_field :website %>
@@ -21,8 +20,10 @@
       <%= f.label :team_name %>
       <%= f.text_field :team_name %>      
 
-      <%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
+
+      <div class="submit-button" >
+        <%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
+      </div>
     <% end %>
 
-  </div>
 </div>

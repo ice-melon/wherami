@@ -1,10 +1,29 @@
-<li>
-  <%= link_to app.app_name, app %>
+<tr>
+  <td>
+    <%= link_to app.app_name, app %>
+  </td>
   <% if current_user?(find_user_by_id(app.user_id)) %>
-    | <%= link_to "edit",edit_app_path(app) %>
+     <td><%= link_to "edit",edit_app_path(app) %></td>
   <% end %>
+
+  <% if current_user.admin?%>
+  	<%if !app.status%>
+  		<td>
+        <%= link_to "not approve", app, method: :changeStatus,
+                                   data: { confirm: "Are you sure to approve the request" } %>
+      </td>
+    <%else%>
+      <td>
+    	 <%= link_to "approved", app, method: :changeStatus,
+                                   data: { confirm: "Are you sure to set the app not approved" } %>
+      </td>
+  	<%end%>
+  <% end %>
+
   <% if current_user.admin? || current_user?(find_user_by_id(app.user_id)) %>
-    | <%= link_to "delete", app, method: :delete,
+    <td>
+     <%= link_to "delete", app, method: :delete,
                                   data: { confirm: "You sure?" } %>
+    </td>
   <% end %>
-</li>
+</tr>
