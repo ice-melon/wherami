@@ -1,0 +1,156 @@
+<div class="secondContainer">
+<h1>Localization API User Guide</h1>
+<br>
+<br>
+<h2>Key Developer Features</h2>
+<br>
+<h3>1. Indoor Positioning</h3>
+
+<p>The API provides the ability to get the user&#39;s position in the indoor environment. You just need to open the WIFI permissions to it, and then it will automatically collect the WIFI information nearby and calculate the position that the user is in. The accuracy can be less than 5 meters.</p>
+
+<h3>2. Power Saving</h3>
+
+<p>As we all know the WIFI on smartphones costs so much power. If one application keeps scanning the WIFI all the time, nobody will use it. The API can automatically saving the power when positioning. If the user&#39;s movement is really slow, it will not collect WIFI information and update the user&#39;s position.</p>
+
+<h3>3. Offline Calculation</h3>
+
+<p>The whole positioning algorithm is offline, so you do not need to send all the data collected to the server. This means it can save the user&#39;s 2G/3G/4G data traffic and save the user&#39;s phone&#39;s power.</p>
+
+
+<br>
+<br>
+<h2>Getting Started</h2>
+<br>
+<h3>1. Apply API access permission</h3>
+
+<p>Before using the Localization API, you need to apply for the permission about using the API. You must provide some information about you application to ask for the permission. You should provide the following information:</p>
+
+<ul><li><p><strong>Application name</strong></p></li><li><p><strong>Application package name</strong></p></li><li><p><strong>Application description</strong></p></li><li><p><strong>MD5 fingerprint of your private key to pack your application</strong></p></li><li><p><strong>Developer&#39;s information</strong></p></li></ul>
+
+<p>There is two way to get the MD5 fingerprint of the private key.</p>
+
+<p>a. If you use the eclipse, you can go to <strong>Window</strong> &gt; <strong>Preference</strong>, Open the Android tag and click the <strong>Build</strong> item, then you can find your fingerprints of the keystores. Just like the following image.</p>
+
+<p><img alt="Image1" src="assets/image1.png"/></p>
+
+<p>b. If you want to publish you application and using the keystore named &quot;publish.keystore&quot; to sign the application, you could run the follow command to get the MD5 fingerprint.</p>
+
+<blockquote><p><code>&lt;path to JDK&gt;</code>/bin/keytool -v -list -alias <code>&lt;keyname&gt;</code> -keystore <code>&lt;publish.keystore&gt;</code> -storepass <code>&lt;keystore&#39;s password&gt;</code> -keypass <code>&lt;key&#39;s password&gt;</code></p></blockquote>
+
+<p>Replace the content inside the angle brackets with yours. And then you can get the information just like the following.</p>
+
+<p><img alt="Image2" src="assets/image2.png"/></p>
+
+<h3>2. Download the positioning data package</h3>
+
+<p>When your application is approved to use the Localization API, you can go back to our website and login to download the library and the positioning data package.
+We provide some packages for downloading:</p>
+
+<ul>
+	<li>
+		<p><strong><%= link_to "Localization API library", {:controller => "static_pages", :action => "download", :filename => "Localization API user guide.docx" }%></strong> : it contains some .jar files and .so files to do the positioning work</p>
+	</li>
+	<li>
+		<p><strong><%= link_to "Localization API document", {:controller => "static_pages", :action => "download", :filename => "document" }%></strong> : the documents that tell about how to use the API</p>
+	</li>
+	<li>
+		<p><strong><%= link_to "Positioning Data", {:controller => "static_pages", :action => "download", :filename => "position_data.zip" }%></strong> : the data that use to do the calculation</p>
+	</li>
+	<li>
+		<p><strong><%= link_to "Map Data", {:controller => "static_pages", :action => "download", :filename => "map_data.zip" }%></strong> : the maps of the site</p>
+	</li>
+</ul>
+
+<p>For the positioning data, you can unzip it and put it to the SD card or the private path of your application, where it can be access by your application and the API.</p>
+
+<p>The path will be like this :</p>
+
+<blockquote><p>/sdcard/position_data/hkust/1000/</p></blockquote>
+
+<p>And you should remember the <em>/sdcard/position_data/</em>, and pass it to the API as the data&#39;s root path.</p>
+
+<h3>3. Add Android permissions</h3>
+
+<p>After creating your Android project, you need to add some permission to let the API work for you. You should add the permissions to the AndroidManifest.xml file.</p>
+
+<p>The following permissions are required.</p>
+
+<ul><li><p><strong>android.permission.INTERNET</strong></p></li><li><p><strong>android.permission.ACCESS_WIFI_STATE</strong></p></li><li><p><strong>android.permission.CHANGE_WIFI_STATE</strong></p></li></ul>
+
+<p>The following permissions are optional.</p>
+
+<ul><li><strong>android.permission.WRITE_EXTERNAL_STORAGE</strong> (If you put the positioning data on the SD card, this permission is needed)</li></ul>
+
+<h3>4. Using the library in your application</h3>
+
+<p>After download the library package, you can find some .jar files and some folders contain the .so file. These are the library files required for using the Localization API.</p>
+
+<p>You should put all the files and folders into the directory named libs under the project&#39;s root. And then add the jars to the build path.</p>
+
+<h3>5. Initialization an instance of IndoorLocationManager</h3>
+
+<p>Before you get an instance of IndoorLocationManager, the API will first send a request to verify whether your application is approved to use the API. So you should use the following code to get an instance.</p>
+
+<pre><code "java">
+private IndoorLocationManager indoorLocationManager = null;
+//...
+IndoorLocationManager.newInstance(this, siteName, POSITION_DATA_PATH, new OnVerificationListener() {
+	public void onVerificationFinished(boolean isSuccess, String resultCode) {
+		if(isSuccess) {
+			//Verification passed!
+			indoorLocationManager = IndoorLocationManager.getInstance();
+			startPositioning();
+		} else {
+			//Verification failed
+		}
+	}
+});</code></pre>
+
+<h3>6. Setting the callbacks and start positioning</h3>
+
+<p>The API uses an event-driven design. So you should setup some callback function to receive the information and result. The listeners you can set are list below:</p>
+
+<ul><li><p><strong>OnWifiNotEnabledWhenScanning</strong> : The API finds that the WIFI is closed when scanning</p></li><li><p><strong>OnWifiConnected</strong> : The callback when the phone connects to a WIFI</p></li><li><p><strong>OnReadingDataBegin</strong> : The callback tells you it starts reading data</p></li><li><p><strong>OnGetScanResult</strong> : The callback return you the scan result of the AP information</p></li><li><p><strong>OnGetLocationResult</strong> : The callback return the position after calculating</p></li></ul>
+
+<p>Here is the sample code.</p>
+
+<pre><code class= "java">
+private void startPositioning() {
+	indoorLocationManager.setOnWifiNotEnabledWhenScanningListener(new OnWifiNotEnabledWhenScanningListener() {
+		public void onWifiNotEnabledWhenScanning(WifiManager WifiManager) {
+			// TODO Handle the case that the WIFI is disabled when scanning
+		}
+	});
+	indoorLocationManager.setOnWifiConnectedListener(new OnWifiConnectedListener() {
+		public void onWifiConnected() {
+			// TODO Handle the case that the WIFI is connected
+		}
+	});
+	indoorLocationManager.setOnReadingDataBeginListener(new OnReadingDataBeginListener() {
+		public void onReadingDataBegin() {
+			// TODO The callback that the positioning process is pending to read data
+		}
+	});
+	indoorLocationManager.setOnGetLocationResultListener(new OnGetLocationResultListener() {
+		public void onGetLocationResult(String area, PointF[] points, Integer[] radius, String symbol) {
+			// TODO The callback that finish calculating the position
+			if(area != null &amp;&amp; points != null &amp;&amp; points.length &gt; 0) {
+				//TODO got the position
+			} else {
+				//TODO Calculate failed
+			}
+		}
+	});
+	indoorLocationManager.startLocation()
+}</code></pre>
+
+<h3>7. Stop positioning</h3>
+
+<p>For stopping positioning, just call the following  statements to stop it.</p>
+
+<pre><code class="java">
+if(indoorLocationManager != null) {
+	indoorLocationManager.stopLocation();
+}</code></pre>
+
+</div>

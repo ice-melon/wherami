@@ -1,29 +1,38 @@
-<tr>
-  <td>
-    <%= link_to app.app_name, app %>
-  </td>
-  <% if current_user?(find_user_by_id(app.user_id)) %>
-     <td><%= link_to "edit",edit_app_path(app) %></td>
-  <% end %>
 
-  <% if current_user.admin?%>
-  	<%if !app.status%>
-  		<td>
-        <%= link_to "not approve", app, method: :changeStatus,
-                                   data: { confirm: "Are you sure to approve the request" } %>
+<%if current_user.admin?%>
+
+  <tr>
+    <td><%= link_to app.app_name, app %></td>
+    <%if !app.status%>
+      <td >
+        <%= link_to app, method: :changeStatus,
+                                   data: { confirm: "Are you sure to approve the request" } do%>
+         <span class="glyphicon glyphicon-ban-circle"></span>
+        <%end%>
       </td>
     <%else%>
       <td>
-    	 <%= link_to "approved", app, method: :changeStatus,
-                                   data: { confirm: "Are you sure to set the app not approved" } %>
+       <%= link_to app, method: :changeStatus,
+                                   data: { confirm: "Are you sure to set the app not approved" } do%>
+          <span class="glyphicon glyphicon-ok"></span>
+       <%end%>
       </td>
-  	<%end%>
-  <% end %>
+    <%end%>
+      <td>
+       <%= link_to "delete", app, method: :delete,
+                                    data: { confirm: "You sure?" } %>
+      </td>
+  </tr>
 
-  <% if current_user.admin? || current_user?(find_user_by_id(app.user_id)) %>
+<%else%>
+  <tr>
+    <td><%= link_to app.app_name, app %></td>
     <td>
-     <%= link_to "delete", app, method: :delete,
-                                  data: { confirm: "You sure?" } %>
-    </td>
-  <% end %>
-</tr>
+      <%if app.status%>
+        <span class="glyphicon glyphicon-ok"></span>
+      <%else%>
+        <span class="glyphicon glyphicon-ban-circle"></span>
+      <%end%>
+    </td> 
+  </tr> 
+<%end%>

@@ -4,6 +4,7 @@
 
 $grayMediumLight: #eaeaea;
 
+
 @mixin box_sizing {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
@@ -36,6 +37,10 @@ textarea {
   }
 }
 
+.secondContainer {
+  width: 80%;
+  margin: 0 auto;
+}
 
 
 .dota {
@@ -71,10 +76,15 @@ textarea {
 
  }
 
- .alert{
+code {
+  width: 1000px;
+  
+}
 
- }
-
+pre {
+  overflow: auto;
+  word-wrap: normal;
+}
 
 
 /* typography */
@@ -90,14 +100,6 @@ h1 {
   text-align: center;
 }
 
-h2 {
-  font-size: 1.2em;
-  letter-spacing: -1px;
-  margin-bottom: 30px;
-  text-align: center;
-  font-weight: normal;
-  color: $gray-light;
-}
 
 p {
   font-size: 1.1em;
@@ -236,11 +238,17 @@ input {
   }
 }
 
-.apps {
+
+
+/*app cell*/
+.glyphicon-ok{
+  color:#00cb01;
 }
 
 
-/*Home Page*/
+.glyphicon-ban-circle{
+  color:#ff6666;
+}
 
 
 

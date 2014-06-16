@@ -10,6 +10,7 @@ class App < ActiveRecord::Base
 	validates :website, length: {maximum: 50}
 	validates :team_name, length: {maximum: 50}
 	validates :user_id, presence: true
+	validates :fingerprint, presence: true
 	
 
 

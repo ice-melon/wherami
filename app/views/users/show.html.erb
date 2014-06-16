@@ -12,7 +12,17 @@
     	<%if @user.apps.any? %>
     		<h3>Apps</h3>
     		<table class="apps table">
-    			<%= render @apps %>
+    			 <thead>
+              <tr>
+                <th>App Name</th>
+                <th> Status</th>
+              </tr>
+          </thead>
+
+          <tbody>
+              <%= render @apps %>
+          </tbody>
+
     		</table>
     	<%end%>
     </div>

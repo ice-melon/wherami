@@ -3,6 +3,8 @@ class AppsController < ApplicationController
 	 before_action :isBelongToUser, only: [:show, :destroy, :edit, :update]
 	 before_action :admin_user, only:[:index]
 
+	 respond_to :json
+
 
 	def show
 		apps = current_user.apps
@@ -15,6 +17,7 @@ class AppsController < ApplicationController
 
 	def create
 		@app = current_user.apps.build(app_params)
+		@app.fingerprint.gsub!(/:/,'')
 		if @app.save
 			flash[:success] = "success"
 			redirect_to @app
@@ -33,6 +36,7 @@ class AppsController < ApplicationController
 
 	def update
 		@app = App.find(params[:id])
+		app_params[:fingerprint].gsub!(/:/,'')
 		if @app.update_attributes(app_params)
 	      flash[:success] = "App Info Updated"
 	      redirect_to @app
@@ -56,13 +60,31 @@ class AppsController < ApplicationController
 	end
 
 
+	def status
+		package_name = params[:package_name]
+		fingerprint  = params[:fingerprint]
+		
+		@app = App.find_by(package_name: package_name,fingerprint:fingerprint)
+		p @app
+
+		if @app
+			render json: @app.status
+		else
+			render json: false
+		end
+		
+		
+	    
+	end
+
 	private
 		def app_params
 			params.require(:app).permit(:app_name,
 										:package_name,
 										:app_description,
 										:website,
-										:team_name)
+										:team_name,
+										:fingerprint)
 		end
 
 		def isBelongToUser

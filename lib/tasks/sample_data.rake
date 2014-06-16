@@ -33,10 +33,11 @@ namespace :db do
       team_name = Faker::Company.name
       users.each { 
         |user| user.apps.create!(app_name:(app_name + "-#{prefix}"),
-                                            package_name: package_name,
-                                            app_description: app_description,
-                                            website: website,
-                                            team_name: team_name)
+                                  package_name: package_name,
+                                  app_description: app_description,
+                                  website: website,
+                                  team_name: team_name,
+                                  fingerprint:("1q2w3e" + "-#{prefix}"))
         prefix += 1
 
       }

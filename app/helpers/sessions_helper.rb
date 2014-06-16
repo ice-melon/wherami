@@ -44,12 +44,7 @@ module SessionsHelper
     session[:return_to] = request.url if request.get?
   end
 
-  def signed_in_user
-    unless signed_in?
-      store_location
-      redirect_to signin_url, notice: "Please sign in."
-    end
-  end
+
 
   def home_path
     if current_user?
@@ -63,5 +58,14 @@ module SessionsHelper
     end
 
     @home
+  end
+
+
+  def signed_in_user
+    if !signed_in?
+      store_location
+      flash[:warning] = "Please Sign In."
+      redirect_to signin_url
+    end
   end
 end

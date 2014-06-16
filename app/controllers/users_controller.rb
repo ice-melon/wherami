@@ -55,12 +55,7 @@ class UsersController < ApplicationController
                                    :password_confirmation)
     end
 
-    def signed_in_user
-      if !signed_in?
-        store_location
-        redirect_to signin_url, notice: "Please Sign In."
-      end
-    end
+
 
     def correct_user
       if !current_user.admin?
