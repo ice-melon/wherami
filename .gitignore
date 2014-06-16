@@ -23,3 +23,8 @@ doc/
 .project
 .DS_Store
 .idea
+
+
+#ignore byte file
+/app/assets/images
+/files
