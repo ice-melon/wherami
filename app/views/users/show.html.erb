@@ -1,30 +1,31 @@
 <% provide(:title, @user.name) %>
 <div >
-  <aside>
-    <section>
+
       <h1>
-        <%= gravatar_for @user %>
         <%= @user.name %>
       </h1>
-    </section>
 
-    <div >
+  
+
+    <div id="user-apps">
     	<%if @user.apps.any? %>
-    		<h3>Apps</h3>
+    		<h4>Your Apps</h4>
     		<table class="apps table">
     			 <thead>
               <tr>
                 <th>App Name</th>
-                <th> Status</th>
+                <th>Status</th>
+                <th>Operation</th>
               </tr>
           </thead>
 
           <tbody>
-              <%= render @apps %>
+              <%= render @user.apps %>
           </tbody>
 
     		</table>
     	<%end%>
     </div>
-  </aside>
+
+    <%= link_to "Apply OpenSDK", new_app_path, class: "btn btn-large btn-primary" %>
 </div>  

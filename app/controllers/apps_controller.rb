@@ -19,8 +19,8 @@ class AppsController < ApplicationController
 		@app = current_user.apps.build(app_params)
 		@app.fingerprint.gsub!(/:/,'')
 		if @app.save
-			flash[:success] = "success"
-			redirect_to @app
+			flash[:success] = "apply success! Approvement will take 1 day!"
+			redirect_to current_user
 		else
 			render 'new'
 		end
@@ -39,7 +39,7 @@ class AppsController < ApplicationController
 		app_params[:fingerprint].gsub!(/:/,'')
 		if @app.update_attributes(app_params)
 	      flash[:success] = "App Info Updated"
-	      redirect_to @app
+	      redirect_to current_user
 	    else
 	      render 'edit'
 	    end

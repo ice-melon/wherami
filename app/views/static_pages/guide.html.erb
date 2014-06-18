@@ -6,15 +6,15 @@
 <br>
 <h3>1. Indoor Positioning</h3>
 
-<p>The API provides the ability to get the user&#39;s position in the indoor environment. You just need to open the WIFI permissions to it, and then it will automatically collect the WIFI information nearby and calculate the position that the user is in. The accuracy can be less than 5 meters.</p>
+<p>The Localization API provides the ability to obtain the user's position in the supported indoor environment. You are required to open the WIFI permissions to enable the function, the system will automatically collect the WIFI information nearby and calculate the position of the user. Generally, the accuracy can be less than 5 meters.</p>
 
 <h3>2. Power Saving</h3>
 
-<p>As we all know the WIFI on smartphones costs so much power. If one application keeps scanning the WIFI all the time, nobody will use it. The API can automatically saving the power when positioning. If the user&#39;s movement is really slow, it will not collect WIFI information and update the user&#39;s position.</p>
+<p>As we all know the WIFI on smartphones consumes so much power. If one application keeps scanning the WIFI all the time, it will prohibit the usage of the users. The API provides automatic power saving feature. If the user's movement is really slow, the system will switch off the WIFI scanning and stop updating the user's position.</p>
 
 <h3>3. Offline Calculation</h3>
 
-<p>The whole positioning algorithm is offline, so you do not need to send all the data collected to the server. This means it can save the user&#39;s 2G/3G/4G data traffic and save the user&#39;s phone&#39;s power.</p>
+<p>The whole positioning algorithm is offline, so you do not need to send any collected data to the server. The system reduce the consumption of the 2G/3G/4G data traffic and the phone's power.</p>
 
 
 <br>
@@ -31,7 +31,7 @@
 
 <p>a. If you use the eclipse, you can go to <strong>Window</strong> &gt; <strong>Preference</strong>, Open the Android tag and click the <strong>Build</strong> item, then you can find your fingerprints of the keystores. Just like the following image.</p>
 
-<p><img alt="Image1" src="assets/image1.png"/></p>
+<p><img alt="Image1" src="/images/image1.png"/></p>
 
 <p>b. If you want to publish you application and using the keystore named &quot;publish.keystore&quot; to sign the application, you could run the follow command to get the MD5 fingerprint.</p>
 
@@ -39,7 +39,7 @@
 
 <p>Replace the content inside the angle brackets with yours. And then you can get the information just like the following.</p>
 
-<p><img alt="Image2" src="assets/image2.png"/></p>
+<p><img alt="Image2" src="/images/image2.png"/></p>
 
 <h3>2. Download the positioning data package</h3>
 
@@ -48,16 +48,17 @@ We provide some packages for downloading:</p>
 
 <ul>
 	<li>
-		<p><strong><%= link_to "Localization API library", {:controller => "static_pages", :action => "download", :filename => "Localization API user guide.docx" }%></strong> : it contains some .jar files and .so files to do the positioning work</p>
+		<p><strong><%= link_to "Localization API library", "/files/LocalizationAPI.zip" %></strong> : it contains some .jar files and .so files to do the positioning work</p>
+	</li>
+
+	<li>
+		<p><strong><%= link_to "Localization API document", "/files/Localization API user guide.docx" %></strong> : the documents that tell about how to use the API</p>
 	</li>
 	<li>
-		<p><strong><%= link_to "Localization API document", {:controller => "static_pages", :action => "download", :filename => "document" }%></strong> : the documents that tell about how to use the API</p>
+		<p><strong><%= link_to "Positioning Data", "/files/position_data.zip" %></strong> : the data that use to do the calculation</p>
 	</li>
 	<li>
-		<p><strong><%= link_to "Positioning Data", {:controller => "static_pages", :action => "download", :filename => "position_data.zip" }%></strong> : the data that use to do the calculation</p>
-	</li>
-	<li>
-		<p><strong><%= link_to "Map Data", {:controller => "static_pages", :action => "download", :filename => "map_data.zip" }%></strong> : the maps of the site</p>
+		<p><strong><%= link_to "Map Data", "/files/map_data.zip" %></strong> : the maps of the site</p>
 	</li>
 </ul>
 
