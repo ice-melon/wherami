@@ -26,6 +26,7 @@
     		</table>
     	<%end%>
     </div>
-
+    <%if current_user?(@user)%>
     <%= link_to "Apply OpenSDK", new_app_path, class: "btn btn-large btn-primary" %>
+   <%end%>
 </div>  
