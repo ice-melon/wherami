@@ -5,7 +5,6 @@
         <%= @user.name %>
       </h1>
 
-  
 
     <div id="user-apps">
     	<%if @user.apps.any? %>
@@ -26,7 +25,8 @@
     		</table>
     	<%end%>
     </div>
+
     <%if current_user?(@user)%>
-    <%= link_to "Apply OpenSDK", new_app_path, class: "btn btn-large btn-primary" %>
-   <%end%>
+      <%= link_to "Apply OpenSDK", new_app_path, class: "btn btn-large btn-primary" %>
+    <%end%>
 </div>  

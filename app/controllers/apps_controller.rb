@@ -64,17 +64,13 @@ class AppsController < ApplicationController
 		package_name = params[:package_name]
 		fingerprint  = params[:fingerprint]
 		
-		@app = App.find_by(package_name: package_name,fingerprint:fingerprint)
-		p @app
+		@app = App.find_by(package_name: package_name)
 
-		if @app
+		if @app.fingerprint[fingerprint]
 			render json: @app.status
 		else
 			render json: false
-		end
-		
-		
-	    
+		end  
 	end
 
 	private
