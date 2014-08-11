@@ -1,16 +1,18 @@
 <div class="center hero-unit">
   <h1>Welcome to Wherami</h1>
 
-  <h2>
+  <h2 style="margin-top: 50px;">
     You can get 
-    <a href="https://play.google.com/store/apps/details?id=mtrec.wherami">Wherami in Google Play</a>.   
+    <a href="https://play.google.com/store/apps/details?id=mtrec.wherami">Wherami in Google Play</a>  
   </h2>
   <%if !signed_in?%>
-  	  <h2>
-	  	Register to download Open SDK!
+  	 <h2 style="margin-top: 50px;">
+	  	Reading the <a href="/guide">Guide</a> to use Open SDK!
 	  </h2>	
-
-	  <%= link_to "Sign up now!", signup_path, class: "btn btn-large btn-primary" %>
+  <div style="margin-top: 30px;">
+    <%= link_to "Sign In", signin_path, class: "btn btn-large btn-primary" %>
+	  <%= link_to "Sign Up", signup_path, class: "btn btn-large btn-primary" %>
+  <div>
    <%end%>
 </div>
 
