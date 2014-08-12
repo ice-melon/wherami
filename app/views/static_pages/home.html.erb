@@ -5,10 +5,11 @@
     You can get 
     <a href="https://play.google.com/store/apps/details?id=mtrec.wherami">Wherami in Google Play</a>  
   </h2>
-  <%if !signed_in?%>
   	 <h2 style="margin-top: 50px;">
-	  	Reading the <a href="/guide">Guide</a> to use Open SDK!
+	  	Reading the <a href="/guide">Guide</a> and Download<a href="/guide/#download_content"> Open SDK</a>!
 	  </h2>	
+     <%if !signed_in?%>
+
   <div style="margin-top: 30px;">
     <%= link_to "Sign In", signin_path, class: "btn btn-large btn-primary" %>
 	  <%= link_to "Sign Up", signup_path, class: "btn btn-large btn-primary" %>
