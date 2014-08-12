@@ -1,5 +1,6 @@
 class StaticPagesController < ApplicationController
-  before_action :signed_in_user, only: [:download]
+  before_action :signed_in_user, only: [:mail]
+  before_action :admin_user, only: [:mail]
 
   def home
   end
@@ -14,12 +15,26 @@ class StaticPagesController < ApplicationController
   end
 
   def guide
-    @address = "localhost:3000"
+
   end
 
   def download
-    filename = params[:filename]
-    send_file("localhost:3000/files/#{filename}",
-              filename: "#{filename}")
+    # filename = params[:filename]
+    # send_file("localhost:3000/files/#{filename}",
+    #           filename: "#{filename}")
   end
+
+  def mail
+    
+  end
+
+  def updateMail
+    @mailList = User.all
+    @mailList.each { |user|
+        UserMailer.update_email(user).deliver
+    }
+    flash[:success] = "mail has send! Don't send it again!"
+    render 'mail'
+  end
+
 end

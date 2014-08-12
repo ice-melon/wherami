@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
-   before_action :signed_in_user, only: [:edit, :update, :show, :destroy,:index]
+   before_action :signed_in_user, only: [:edit, :update, :show, :destroy,:index,:updateMail]
    before_action :correct_user,   only: [:edit, :update, :show]
-   before_action :admin_user,     only: [:destroy,:index]
+   before_action :admin_user,     only: [:destroy,:index,:updateMail]
 
   def new
   	@user = User.new
@@ -45,6 +45,9 @@ class UsersController < ApplicationController
     flash[:success] = "User Deleted."
     redirect_to users_url
   end
+
+
+
 
 
   private

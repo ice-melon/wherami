@@ -10,10 +10,13 @@ SampleApp::Application.routes.draw do
   match '/signin',  to: 'sessions#new',         via: 'get'
   match '/signout', to: 'sessions#destroy',     via: 'delete'
 
+  match '/updatemail', to: 'static_pages#updateMail',   via: 'get'
   match '/help',    to: 'static_pages#help',    via: 'get'
   match '/contact', to: 'static_pages#contact', via: 'get'
   match '/guide',   to: 'static_pages#guide',   via: 'get'
   match '/download', to: 'static_pages#download',via: 'get'
+  match '/mail',    to: 'static_pages#mail',    via: 'get'
+
 
   match '/apps/:id', to: 'apps#changeStatus',  via: 'post'
   match '/status',   to: 'apps#status', via: 'get'
