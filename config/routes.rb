@@ -18,6 +18,8 @@ SampleApp::Application.routes.draw do
   match '/mail',    to: 'static_pages#mail',    via: 'get'
 
 
+
+
   match '/apps/:id', to: 'apps#changeStatus',  via: 'post'
   match '/status',   to: 'apps#status', via: 'get'
 

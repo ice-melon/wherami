@@ -19,9 +19,7 @@ class StaticPagesController < ApplicationController
   end
 
   def download
-    # filename = params[:filename]
-    # send_file("localhost:3000/files/#{filename}",
-    #           filename: "#{filename}")
+
   end
 
   def mail
