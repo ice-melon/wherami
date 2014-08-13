@@ -1,6 +1,6 @@
 class StaticPagesController < ApplicationController
   before_action :signed_in_user, only: [:mail]
-  before_action :admin_user, only: [:mail]
+  before_action :admin_user, only: [:mail,:updateMail]
 
   def home
   end
