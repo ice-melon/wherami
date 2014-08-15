@@ -26,4 +26,4 @@ doc/
 
 
 #ignore byte file
-/public/*/
+/public/assets/
