@@ -1,39 +1,44 @@
 <div class="secondContainer">
-<h1>Localization API User Guide</h1>
-<br>
-<br>
-<h2>Key Developer Features</h2>
-<br>
-<h3>1. Indoor Positioning</h3>
 
-<p>The Localization API provides the ability to obtain the user's position in the supported indoor environment. You are required to open the WIFI permissions to enable the function, the system will automatically collect the WIFI information nearby and calculate the position of the user. Generally, the accuracy can be less than 5 meters.</p>
+<h1>Wherami SDK User Guide</h1>
 
-<h3>2. Power Saving</h3>
+<h2>1. Summary</h2>
 
-<p>As we all know the WIFI on smartphones consumes so much power. If one application keeps scanning the WIFI all the time, it will prohibit the usage of the users. The API provides automatic power saving feature. If the user's movement is really slow, the system will switch off the WIFI scanning and stop updating the user's position.</p>
+<p><strong>Wherami</strong> SDK provides an open Android Java API that allows you to integrate real-time location and path finding function on HKUST campus into your Android app.</p>
 
-<h3>3. Offline Calculation</h3>
+<p>There are 2 components in Wherami SDK:</p>
 
-<p>The whole positioning algorithm is offline, so you do not need to send any collected data to the server. The system reduce the consumption of the 2G/3G/4G data traffic and the phone's power.</p>
+<ul><li><strong>LocalizationAPI</strong>.
+The Localization API provides the ability to obtain the user&#39;s position in the supported indoor environment. You are required to open the WIFI permissions to enable the function, the system will automatically collect the WIFI information nearby and calculate the position of the user. Generally, the accuracy is within 5 meters. The API also provides the shortest path search function between 2 positions.</li><li><strong>Position data</strong>.
+The position data is used to do the location estimation calculation. It also contains map related information to facilite the rendering of a position on the map on HKUST campus.</li></ul>
 
+<h2>2. Getting Started</h2>
 
-<br>
-<br>
-<h2>Getting Started</h2>
-<br>
-<h3>1. Apply API access permission</h3>
+<p>Please follow the steps bellow to use Wherami SDK:</p>
 
-<p>Before using the Localization API, you need to <%= link_to "apply", users_path %> for the permission about using the API. You must provide some information about you application to ask for the permission. You should provide the following information:</p>
+<ol><li><p>User account sing up</p><p>You need to <strong><a href="http://eek088.ust.hk:4005/">sign up</a></strong> a user account in our website to register your applications. The user account can be shared by multiple developers in the team. You can register multiple applications that use the location API under the same user account. Wherami SDK upgrade announcement will be sent to the registered email account.</p></li><li><p>Application registration (detailed bellow)</p><p>For each new application, you need to register it on our website. You must provide some information about you application to ask for the permission. It will normally take 24 hours before we review and approve your application.</p></li><li><p>Download Wherami SDK</p><p>You can download the free SDK from our <strong><a href="http://eek088.ust.hk:4005/download">website</a></strong>.</p></li><li><p>Use the Localization API (detailed bellow)</p><p>Details and sample codes are provided in this guide.</p></li></ol>
 
-<ul><li><p><strong>Application name</strong></p></li><li><p><strong>Application package name</strong></p></li><li><p><strong>Application description</strong></p></li><li><p><strong>MD5 fingerprint of your private key to pack your application</strong></p></li><li><p><strong>Developer&#39;s information</strong></p></li></ul>
+<h2>3. Application registration</h2>
 
-<p>There is two way to get the MD5 fingerprint of the private key.</p>
+<h3>3.1. Apply Localization API usage permission</h3>
 
-<p>a. If you use the eclipse, you can go to <strong>Window</strong> &gt; <strong>Preference</strong>, Open the Android tag and click the <strong>Build</strong> item, then you can find your fingerprints of the keystores. Just like the following image.</p>
+<p>Before using the Localization API, you need to <strong><a href="http://eek088.ust.hk:4005/users">apply</a></strong> for the permission to use the API. This is for us to better track what applications that are using the API so that we can provide the developers with relevant function and performance upgrades.</p>
+
+<p>You must provide the following information about you application to ask for the permission: </p>
+
+<ul><li><p><strong>Application name</strong></p></li><li><p><strong>Application package name</strong></p></li><li><p><strong>MD5 fingerprint of your private key to pack your application</strong></p></li><li><p><strong>Application description</strong></p></li></ul>
+
+<h3>3.2. Obtain MD5 fingerprint</h3>
+
+<p>Similar to the mechanism in developing an application that uses the Google Maps, each developer in your team needs to obtain a MD5 fingerprint to package the application for release.</p>
+
+<p>There is two way to obtain the MD5 fingerprint of the private key.</p>
+
+<p><strong>a.</strong> If you use the eclipse, you can go to <strong>Window</strong> &gt; <strong>Preference</strong>, Open the Android tag and click the <strong>Build</strong> item, then you can find your fingerprints of the keystores. Just like the following image.</p>
 
 <p><img alt="Image1" src="/images/image1.png"/></p>
 
-<p>b. If you want to publish you application and using the keystore named &quot;publish.keystore&quot; to sign the application, you could run the follow command to get the MD5 fingerprint.</p>
+<p><strong>b.</strong> If you want to publish you application and using the keystore named &quot;publish.keystore&quot; to sign the application, you could run the follow command to get the MD5 fingerprint.</p>
 
 <blockquote><p><code>&lt;path to JDK&gt;</code>/bin/keytool -v -list -alias <code>&lt;keyname&gt;</code> -keystore <code>&lt;publish.keystore&gt;</code> -storepass <code>&lt;keystore&#39;s password&gt;</code> -keypass <code>&lt;key&#39;s password&gt;</code></p></blockquote>
 
@@ -41,27 +46,49 @@
 
 <p><img alt="Image2" src="/images/image2.png"/></p>
 
-<div id="download_content"></div>
-<h3 >2. Download the positioning data package</h3>
+<h2>4. Wherami SDK</h2>
 
-<p>When your application is approved to use the Localization API, you can go back to our website and login to download the library and the positioning data package.
-We provide some packages for downloading:</p>
+<h3>4.1. Wherami SDK components</h3>
 
-<ul>
-	<li>
-		<p><strong><%= link_to "Localization API library and Map Data", "/files/LocalizationAPIwithData.zip" %></strong> : it contains some both the library and hkust map data</p>
-	</li>
-</ul>
+<p>There are 2 components in Wherami SDK <strong>LocalizationAPIwithData.zip</strong> (<strong><a href="http://eek088.ust.hk:4005/download">Download</a></strong>):</p>
 
-<p>For the positioning data, you can unzip it and put it to the SD card or the private path of your application, where it can be access by your application and the API.</p>
+<ul><li><p><strong>LocalizationAPI</strong></p><p>The localization Java library. It contains some .jar files and .so files to do the positioning calculation.</p></li><li><p><strong>Position data</strong></p><p>The data that use to do the position calculation. It contains a bounch of encrypted data files and 3 plain files, <em>info.txt</em>, <em>fac.txt</em> and <em>map.jpg</em>.</p></li></ul>
 
-<p>The path will be like this :</p>
+<h3>4.1. Position data</h3>
+
+<p>Position data are arranged in root folder:</p>
+
+<blockquote><p>/data/wherami/hkust/</p></blockquote>
+
+<p>Under the root folder, the data are separated by <em> <strong>area_id</strong></em>, which uniquely idenifies a floor and its building. The mapping can be find in <em>info.txt</em> file under each area folder.</p>
+
+<p>For example, /data/wherami/hkust/1000/info.txt shows that</p>
+
+<pre><code>    area_id=1000
+    area_name=G/F
+    building_name=academic building</code></pre>
+
+<p>It means the area_id <em>[1000]</em> identifies the G/F on the Academic Building. The <em>map.jpg</em> file is the corresponding floor plan and <em>fac.txt</em> file contains the content marking on the map. You can replace <em>map.jpg</em> and <em>fac.txt</em> file with your own preference.</p>
+
+<p><em>info.txt</em> also defines the scale, orientation and universal coordination conversion for the map.</p>
+
+<h3>4.2. Save position data on internal storage</h3>
+
+<p>You can save files directly on the device&#39;s internal storage. When the user uninstalls your application, these files are removed.</p>
+
+<h3>4.3. Save position data on external storage</h3>
+
+<p>For the position data, you can unzip it and store it on the SD card or the private path of your application, where it can be accessed by your application and the API.</p>
+
+<p>The path will be like this:</p>
 
 <blockquote><p>/sdcard/position_data/hkust/1000/</p></blockquote>
 
 <p>And you should remember the <em>/sdcard/position_data/</em>, and pass it to the API as the data&#39;s root path.</p>
 
-<h3>3. Add Android permissions</h3>
+<h2>5. Use the Localization API</h2>
+
+<h3>5.1. Add Android permissions</h3>
 
 <p>After creating your Android project, you need to add some permission to let the API work for you. You should add the permissions to the AndroidManifest.xml file.</p>
 
@@ -73,17 +100,17 @@ We provide some packages for downloading:</p>
 
 <ul><li><strong>android.permission.WRITE_EXTERNAL_STORAGE</strong> (If you put the positioning data on the SD card, this permission is needed)</li></ul>
 
-<h3>4. Using the library in your application</h3>
+<h3>5.2. Using the library in your application</h3>
 
 <p>After download the library package, you can find some .jar files and some folders contain the .so file. These are the library files required for using the Localization API.</p>
 
 <p>You should put all the files and folders into the directory named libs under the project&#39;s root. And then add the jars to the build path.</p>
 
-<h3>5. Initialization an instance of IndoorLocationManager</h3>
+<h3>5.3. Initialization an instance of IndoorLocationManager</h3>
 
 <p>Before you get an instance of IndoorLocationManager, the API will first send a request to verify whether your application is approved to use the API. So you should use the following code to get an instance.</p>
 
-<pre><code "java">
+<pre><code>&lt;!-- lang: java --&gt;
 private IndoorLocationManager indoorLocationManager = null;
 //...
 IndoorLocationManager.newInstance(this, siteName, POSITION_DATA_PATH, new OnVerificationListener() {
@@ -96,9 +123,11 @@ IndoorLocationManager.newInstance(this, siteName, POSITION_DATA_PATH, new OnVeri
 			//Verification failed
 		}
 	}
-});</code></pre>
+}, disabilityPath);</code></pre>
 
-<h3>6. Setting the callbacks and start positioning</h3>
+<p>The optional boolean parameter <strong>disabilityPath</strong> specifies whether stairs (or stair escalators)  should be included/excluded in the calculation of the shortest path or not. the value is <em>FALSE</em> by default.</p>
+
+<h3>5.4. Setting the callbacks and start positioning</h3>
 
 <p>The API uses an event-driven design. So you should setup some callback function to receive the information and result. The listeners you can set are list below:</p>
 
@@ -106,7 +135,7 @@ IndoorLocationManager.newInstance(this, siteName, POSITION_DATA_PATH, new OnVeri
 
 <p>Here is the sample code.</p>
 
-<pre><code class= "java">
+<pre><code>&lt;!-- lang: java --&gt;
 private void startPositioning() {
 	indoorLocationManager.setOnWifiNotEnabledWhenScanningListener(new OnWifiNotEnabledWhenScanningListener() {
 		public void onWifiNotEnabledWhenScanning(WifiManager WifiManager) {
@@ -136,13 +165,184 @@ private void startPositioning() {
 	indoorLocationManager.startLocation()
 }</code></pre>
 
-<h3>7. Stop positioning</h3>
+<h3>5.5. Stop positioning</h3>
 
-<p>For stopping positioning, just call the following  statements to stop it.</p>
+<p>For stopping positioning, just call the following statements to stop it.</p>
 
-<pre><code class="java">
+<pre><code>&lt;!-- lang: java --&gt;
 if(indoorLocationManager != null) {
 	indoorLocationManager.stopLocation();
 }</code></pre>
+
+<h3>5.6. Shortest Path Search</h3>
+
+<p>Localization API also provides the function for you to find the shortest path between 2 points. By using the location object </p>
+
+<pre><code>public Location(int areaId, float x, float y)</code></pre>
+
+<p>You can fetch the shortest path as shown bellow: </p>
+
+<pre><code>ArrayList&lt;Location&gt; path = IndoorLocationManager.getInstance().findShortestPath(srcLocation, destLocation, areaId);</code></pre>
+
+<h2>6. Sample Utility</h2>
+
+<p>Here is a sample utility that demos the usage of the Localization API. This program displays your current position as you walk around the buildings (Academic Building, IAS Building and LSK building). </p>
+
+<pre><code>&lt;!-- lang: java --&gt;
+package mtrec.localizationapitest;
+
+import mtrec.wherami.lbs.datatype.PointF;
+import mtrec.wherami.lbs.process.ILocationUtil.OnGetLocationResultListener;
+import mtrec.wherami.lbs.process.ILocationUtil.OnReadingDataBeginListener;
+import mtrec.wherami.lbs.process.ILocationUtil.OnWifiConnectedListener;
+import mtrec.wherami.lbs.process.ILocationUtil.OnWifiNotEnabledWhenScanningListener;
+import mtrec.wherami.lbs.process.IndoorLocationManager;
+import mtrec.wherami.lbs.process.IndoorLocationManager.OnVerificationListener;
+import android.app.Activity;
+import android.net.wifi.WifiManager;
+import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
+import android.util.Log;
+import android.view.View;
+import android.widget.ScrollView;
+import android.widget.TextView;
+
+public class MainActivity extends Activity {
+	private static final String POSITION_DATA_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + &quot;/mtrec/position_data&quot;;
+	private TextView positionTextView;
+	private IndoorLocationManager indoorLocationManager;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
+
+		initialize();
+		positionTextView = (TextView)findViewById(R.id.position_text);
+	}
+
+	private void initialize() {
+		String siteName = &quot;hkust&quot;;
+		IndoorLocationManager.newInstance(this, siteName, POSITION_DATA_PATH, new OnVerificationListener() {
+
+			@Override
+			public void onVerificationFinished(boolean isSuccess, String resultCode) {
+				Log.e(&quot;mtrec&quot;, &quot;Passed : &quot; + isSuccess + &quot;!!!!!&quot; + resultCode);
+				if(isSuccess) {
+					positionTextView.setText(&quot;Verification passed!&quot;);
+					indoorLocationManager = IndoorLocationManager.getInstance();
+					startPositioning();
+				} else {
+					positionTextView.setText(&quot;Verification failed : &quot; + resultCode);
+				}
+			}
+		});
+	}
+
+	private void startPositioning() {
+		indoorLocationManager.setOnWifiNotEnabledWhenScanningListener(new OnWifiNotEnabledWhenScanningListener() {
+
+			@Override
+			public void onWifiNotEnabledWhenScanning(WifiManager WifiManager) {
+				// TODO Handle the case that the WIFI is disabled when scanning
+				appendMessage(&quot;WIFI disabled&quot;);
+			}
+		});
+		indoorLocationManager.setOnWifiConnectedListener(new OnWifiConnectedListener() {
+
+			@Override
+			public void onWifiConnected() {
+				// TODO Handle the case that the WIFI is connected
+				appendMessage(&quot;WIFI enabled&quot;);
+			}
+		});
+		indoorLocationManager.setOnReadingDataBeginListener(new OnReadingDataBeginListener() {
+
+			@Override
+			public void onReadingDataBegin() {
+				// TODO The callback that the positioning process is pending to read data
+				runOnUiThread(new Runnable() {
+
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						appendMessage(&quot;Start reading data&quot;);
+					}
+				});
+			}
+		});
+		indoorLocationManager.setOnGetLocationResultListener(new OnGetLocationResultListener() {
+
+			@Override
+			public void onGetLocationResult(String area, PointF[] points,
+					Integer[] radius, String symbol) {
+				// TODO The callback that finish calculating the position
+				if(area != null &amp;&amp; points != null &amp;&amp; points.length &gt; 0) {
+					StringBuilder positionFoundString = new StringBuilder();
+					positionFoundString.append(&quot;Position found\n&quot;);
+					int i = 0;
+					for(PointF point : points) {
+						positionFoundString.append(&quot;Area : &quot;).append(area).append(&quot;, x : &quot;).append(point.x).append(&quot;, y : &quot;)
+							.append(point.y).append(&quot;, radius : &quot;).append(radius[i]).append(&quot;\n&quot;);
+						i++;
+					}
+					appendMessage(positionFoundString.toString());
+				} else {
+					appendMessage(&quot;Calculate failed, waiting another try&quot;);
+				}
+			}
+		});
+	}
+
+	private void appendMessage(String message) {
+		String lastText = positionTextView.getText() + &quot;\n&quot;;
+		positionTextView.setText(lastText + message);
+
+		new Handler().post(new Runnable() {
+
+			@Override
+			public void run() {
+				((ScrollView)findViewById(R.id.scroll_view)).fullScroll(ScrollView.FOCUS_DOWN);
+			}
+		});
+	}
+
+	private void stopPositioning() {
+		if(indoorLocationManager != null) {
+			try {
+				indoorLocationManager.stopLocation();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public void onButtonClick(View view) {
+		int id = view.getId();
+		switch (id) {
+		case R.id.start_button:
+			if(indoorLocationManager != null)
+				indoorLocationManager.startLocation();
+			findViewById(R.id.start_button).setEnabled(false);
+			break;
+
+		case R.id.stop_button:
+			stopPositioning();
+			findViewById(R.id.start_button).setEnabled(true);
+			break;
+		default:
+			break;
+		}
+	}
+
+	@Override
+	public void onBackPressed() {
+		stopPositioning();
+		finish();
+		android.os.Process.killProcess(android.os.Process.myPid());
+	}
+}</code></pre>
+
 
 </div>

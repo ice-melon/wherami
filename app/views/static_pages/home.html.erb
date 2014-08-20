@@ -5,15 +5,25 @@
     You can get 
     <a href="https://play.google.com/store/apps/details?id=mtrec.wherami">Wherami in Google Play</a>  
   </h2>
-  	 <h2 style="margin-top: 50px;">
-	  	Reading the <a href="/guide">Guide</a> and <a href="/download">Download Open SDK</a>!
-	  </h2>	
-     <%if !signed_in?%>
+   <h2 style="margin-top: 50px;margin-bottom:50px;">
+  	Reading the <a href="/guide">Guide</a> and <a href="/download">Download Open SDK</a>!
+  </h2>	
 
-  <div style="margin-top: 30px;">
-    <%= link_to "Sign In", signin_path, class: "btn btn-large btn-primary" %>
-	  <%= link_to "Sign Up", signup_path, class: "btn btn-large btn-primary" %>
-  <div>
-   <%end%>
+  <div style="height:220px;width:700px;margin:0 auto;">
+    <p style="width:400px;height:200px;float:left;">
+      Wherami SDK provides an open Android Java API that allows you to integrate real-time location and path finding function on HKUST campus into your Android app. Download the SDK and register to create your own location-based applications on HKUST campus. The limit is where your imagination can reach! 
+    </p>
+
+    <%if !signed_in?%>
+      <div style="margin-top: 30px;float:right;margin-right:80px;">
+        <%= link_to "Sign In", signin_path, class: "btn btn-large btn-primary" %>
+        <p>New user? <%= link_to "Sign up now!", signup_path %></p>
+      </div>
+    <%end%>
+  </div>
+
+
+
+
 </div>
 
