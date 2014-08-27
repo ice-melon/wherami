@@ -18,7 +18,11 @@
   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
     <ul class="nav navbar-nav navbar-right">
       <li><%= link_to "Home", root_path %></li>
-      <li><%= link_to "Guide", guide_path %></li>
+
+
+      <li><%= link_to "Guide", summary_path %></li>
+
+
       <li><%= link_to "Download", download_path %></li>
       <% if signed_in? %>
         <%if current_user.admin?%>

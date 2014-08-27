@@ -18,6 +18,7 @@ class AppsController < ApplicationController
 	def create
 		@app = current_user.apps.build(app_params)
 		@app.fingerprint.gsub!(/:/,'')
+		@app.status = true
 		if @app.save
 			flash[:success] = "apply success! Approvement will take 1 day!"
 			redirect_to current_user

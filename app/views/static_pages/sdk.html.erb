@@ -1,0 +1,301 @@
+<div class="secondContainer">
+
+<h1>Use Wherami SDK</h1>
+
+
+<h1>Wherami SDK components</h1>
+
+<p>There are 2 components in Wherami SDK <strong>LocalizationAPIwithData.zip</strong>:</p>
+
+<ul><li><p><strong>Position data</strong></p><p>The position data is used to do the location estimation calculation. It also contains map related information to facilitate the rendering of a position on the map on HKUST campus.</p></li><li><p><strong>LocalizationAPI</strong></p><p>The Localization API contains some .jar files and .so files to do the positioning calculation. It provides the ability to obtain the user&#39;s position in the supported indoor environment. You are required to open the WIFI permissions to enable the function, the system will automatically collect the WIFI information nearby and calculate the position of the user. Generally, the accuracy is within 5 meters. The API also provides the shortest path search function between 2 positions.</p></li></ul>
+
+<h2>1. Position data</h2>
+
+<p>Most of the data in this package are in internal format as they are mandatory to the position calculation. However, there are 3 special files that needs to be mentioned here:</p>
+
+<ul><li><p><em>info.txt</em>: This is a meta file that defines the correspondence of an <strong>*area_id</strong>* to a floor and its building. It also defines the scale, orientation and universal coordination conversion for the map. </p></li><li><p><em>map.jpg</em>: This is the floor map. You can replace this file with your own map, as long as you can keep the scale, orientation, etc as defined in <em>info.txt</em>.</p></li><li><p><em>fac.txt</em>: This is the content marking on the map. You can replace this file with your own content marking</p></li></ul>
+
+<p>Position data are arranged in root folder:</p>
+
+<blockquote><p>/data/wherami/hkust/</p></blockquote>
+
+<p>Under the root folder, the data are separated by <strong>*area_id</strong><em>, which uniquely idenifies a floor and its building. The mapping can be find in </em>info.txt* file under each area folder. For example, /data/wherami/hkust/1000/info.txt shows that</p>
+
+<pre><code>    area_id=1000
+    area_name=G/F
+    building_name=academic building</code></pre>
+
+<p>It means the area_id <em>1000</em> corresponds to the G/F on the Academic Building.</p>
+
+<h3>1.1. Save position data on internal storage</h3>
+
+<p>You can save files directly on the device&#39;s internal storage. When the user uninstalls your application, these files are removed.</p>
+
+<h3>1.2. Save position data on external storage</h3>
+
+<p>For the position data, you can unzip it and store it on the SD card or the private path of your application, where it can be accessed by your application and the API.</p>
+
+<p>The path will be like this:</p>
+
+<blockquote><p>/sdcard/position_data/hkust/1000/</p></blockquote>
+
+<p>And you should remember the <em>/sdcard/position_data/</em>, and pass it to the API as the data&#39;s root path.</p>
+
+<h2>2. Use the Localization API</h2>
+
+<h3>2.1. Add Android permissions</h3>
+
+<p>After creating your Android project, you need to add some permission to let the API work for you. You should add the permissions to the AndroidManifest.xml file.</p>
+
+<p>The following permissions are required.</p>
+
+<ul><li><p><strong>android.permission.INTERNET</strong></p></li><li><p><strong>android.permission.ACCESS_WIFI_STATE</strong></p></li><li><p><strong>android.permission.CHANGE_WIFI_STATE</strong></p></li></ul>
+
+<p>The following permissions are optional.</p>
+
+<ul><li><strong>android.permission.WRITE_EXTERNAL_STORAGE</strong> (If you put the positioning data on the SD card, this permission is needed)</li></ul>
+
+<h3>2.2. Using the library in your application</h3>
+
+<p>After download the library package, you can find some .jar files and some folders contain the .so file. These are the library files required for using the Localization API.</p>
+
+<p>You should put all the files and folders into the directory named libs under the project&#39;s root. And then add the jars to the build path.</p>
+
+<h3>2.3. Initialization an instance of IndoorLocationManager</h3>
+
+<p>Before you get an instance of IndoorLocationManager, the API will first send a request to verify whether your application is approved to use the API. So you should use the following code to get an instance.</p>
+
+<pre><code>&lt;!-- lang: java --&gt;
+private IndoorLocationManager indoorLocationManager = null;
+//...
+IndoorLocationManager.newInstance(this, siteName, POSITION_DATA_PATH, new OnVerificationListener() {
+	public void onVerificationFinished(boolean isSuccess, String resultCode) {
+		if(isSuccess) {
+			//Verification passed!
+			indoorLocationManager = IndoorLocationManager.getInstance();
+			startPositioning();
+		} else {
+			//Verification failed
+		}
+	}
+}, disabilityPath);</code></pre>
+
+<p>The optional boolean parameter <strong>disabilityPath</strong> specifies whether stairs (or stair escalators)  should be included/excluded in the calculation of the shortest path or not. the value is <em>FALSE</em> by default.</p>
+
+<h3>2.4. Setting the callbacks and start positioning</h3>
+
+<p>The API uses an event-driven design. So you should setup some callback function to receive the information and result. The listeners you can set are list below:</p>
+
+<ul><li><p><strong>OnWifiNotEnabledWhenScanning</strong> : The API finds that the WIFI is closed when scanning</p></li><li><p><strong>OnWifiConnected</strong> : The callback when the phone connects to a WIFI</p></li><li><p><strong>OnReadingDataBegin</strong> : The callback tells you it starts reading data</p></li><li><p><strong>OnGetScanResult</strong> : The callback return you the scan result of the AP information</p></li><li><p><strong>OnGetLocationResult</strong> : The callback return the position after calculating</p></li></ul>
+
+<p>Here is the sample code.</p>
+
+<pre><code>&lt;!-- lang: java --&gt;
+private void startPositioning() {
+	indoorLocationManager.setOnWifiNotEnabledWhenScanningListener(new OnWifiNotEnabledWhenScanningListener() {
+		public void onWifiNotEnabledWhenScanning(WifiManager WifiManager) {
+			// TODO Handle the case that the WIFI is disabled when scanning
+		}
+	});
+	indoorLocationManager.setOnWifiConnectedListener(new OnWifiConnectedListener() {
+		public void onWifiConnected() {
+			// TODO Handle the case that the WIFI is connected
+		}
+	});
+	indoorLocationManager.setOnReadingDataBeginListener(new OnReadingDataBeginListener() {
+		public void onReadingDataBegin() {
+			// TODO The callback that the positioning process is pending to read data
+		}
+	});
+	indoorLocationManager.setOnGetLocationResultListener(new OnGetLocationResultListener() {
+		public void onGetLocationResult(String area, PointF[] points, Integer[] radius, String symbol) {
+			// TODO The callback that finish calculating the position
+			if(area != null &amp;&amp; points != null &amp;&amp; points.length &gt; 0) {
+				//TODO got the position
+			} else {
+				//TODO Calculate failed
+			}
+		}
+	});
+	indoorLocationManager.startLocation()
+}</code></pre>
+
+<h3>2.5. Stop positioning</h3>
+
+<p>For stopping positioning, just call the following statements to stop it.</p>
+
+<pre><code>&lt;!-- lang: java --&gt;
+if(indoorLocationManager != null) {
+	indoorLocationManager.stopLocation();
+}</code></pre>
+
+<h3>2.6. Shortest Path Search</h3>
+
+<p>Localization API also provides the function for you to find the shortest path between 2 points. By using the location object </p>
+
+<pre><code>public Location(int areaId, float x, float y)</code></pre>
+
+<p>You can fetch the shortest path as shown below: </p>
+
+<pre><code>ArrayList&lt;Location&gt; path = IndoorLocationManager.getInstance().findShortestPath(srcLocation, destLocation, areaId);</code></pre>
+
+<h2>3. Sample Utility</h2>
+
+<p>Here is a sample utility that demos the usage of the Localization API. This program displays your current position as you walk around the buildings (Academic Building, IAS Building and LSK building). you can add the map on display later by yourself. </p>
+
+<pre><code>&lt;!-- lang: java --&gt;
+package mtrec.localizationapitest;
+
+import mtrec.wherami.lbs.datatype.PointF;
+import mtrec.wherami.lbs.process.ILocationUtil.OnGetLocationResultListener;
+import mtrec.wherami.lbs.process.ILocationUtil.OnReadingDataBeginListener;
+import mtrec.wherami.lbs.process.ILocationUtil.OnWifiConnectedListener;
+import mtrec.wherami.lbs.process.ILocationUtil.OnWifiNotEnabledWhenScanningListener;
+import mtrec.wherami.lbs.process.IndoorLocationManager;
+import mtrec.wherami.lbs.process.IndoorLocationManager.OnVerificationListener;
+import android.app.Activity;
+import android.net.wifi.WifiManager;
+import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
+import android.util.Log;
+import android.view.View;
+import android.widget.ScrollView;
+import android.widget.TextView;
+
+public class MainActivity extends Activity {
+	private static final String POSITION_DATA_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + &quot;/mtrec/position_data&quot;;
+	private TextView positionTextView;
+	private IndoorLocationManager indoorLocationManager;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
+
+		initialize();
+		positionTextView = (TextView)findViewById(R.id.position_text);
+	}
+
+	private void initialize() {
+		String siteName = &quot;hkust&quot;;
+		IndoorLocationManager.newInstance(this, siteName, POSITION_DATA_PATH, new OnVerificationListener() {
+
+			@Override
+			public void onVerificationFinished(boolean isSuccess, String resultCode) {
+				Log.e(&quot;mtrec&quot;, &quot;Passed : &quot; + isSuccess + &quot;!!!!!&quot; + resultCode);
+				if(isSuccess) {
+					positionTextView.setText(&quot;Verification passed!&quot;);
+					indoorLocationManager = IndoorLocationManager.getInstance();
+					startPositioning();
+				} else {
+					positionTextView.setText(&quot;Verification failed : &quot; + resultCode);
+				}
+			}
+		});
+	}
+
+	private void startPositioning() {
+		indoorLocationManager.setOnWifiNotEnabledWhenScanningListener(new OnWifiNotEnabledWhenScanningListener() {
+
+			@Override
+			public void onWifiNotEnabledWhenScanning(WifiManager WifiManager) {
+				// TODO Handle the case that the WIFI is disabled when scanning
+				appendMessage(&quot;WIFI disabled&quot;);
+			}
+		});
+		indoorLocationManager.setOnWifiConnectedListener(new OnWifiConnectedListener() {
+
+			@Override
+			public void onWifiConnected() {
+				// TODO Handle the case that the WIFI is connected
+				appendMessage(&quot;WIFI enabled&quot;);
+			}
+		});
+		indoorLocationManager.setOnReadingDataBeginListener(new OnReadingDataBeginListener() {
+
+			@Override
+			public void onReadingDataBegin() {
+				// TODO The callback that the positioning process is pending to read data
+				runOnUiThread(new Runnable() {
+
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						appendMessage(&quot;Start reading data&quot;);
+					}
+				});
+			}
+		});
+		indoorLocationManager.setOnGetLocationResultListener(new OnGetLocationResultListener() {
+
+			@Override
+			public void onGetLocationResult(String area, PointF[] points,
+					Integer[] radius, String symbol) {
+				// TODO The callback that finish calculating the position
+				if(area != null &amp;&amp; points != null &amp;&amp; points.length &gt; 0) {
+					StringBuilder positionFoundString = new StringBuilder();
+					positionFoundString.append(&quot;Position found\n&quot;);
+					int i = 0;
+					for(PointF point : points) {
+						positionFoundString.append(&quot;Area : &quot;).append(area).append(&quot;, x : &quot;).append(point.x).append(&quot;, y : &quot;)
+							.append(point.y).append(&quot;, radius : &quot;).append(radius[i]).append(&quot;\n&quot;);
+						i++;
+					}
+					appendMessage(positionFoundString.toString());
+				} else {
+					appendMessage(&quot;Calculate failed, waiting another try&quot;);
+				}
+			}
+		});
+	}
+
+	private void appendMessage(String message) {
+		String lastText = positionTextView.getText() + &quot;\n&quot;;
+		positionTextView.setText(lastText + message);
+
+		new Handler().post(new Runnable() {
+
+			@Override
+			public void run() {
+				((ScrollView)findViewById(R.id.scroll_view)).fullScroll(ScrollView.FOCUS_DOWN);
+			}
+		});
+	}
+
+	private void stopPositioning() {
+		if(indoorLocationManager != null) {
+			try {
+				indoorLocationManager.stopLocation();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public void onButtonClick(View view) {
+		int id = view.getId();
+		switch (id) {
+		case R.id.start_button:
+			if(indoorLocationManager != null)
+				indoorLocationManager.startLocation();
+			findViewById(R.id.start_button).setEnabled(false);
+			break;
+
+		case R.id.stop_button:
+			stopPositioning();
+			findViewById(R.id.start_button).setEnabled(true);
+			break;
+		default:
+			break;
+		}
+	}
+
+	@Override
+	public void onBackPressed() {
+		stopPositioning();
+		finish();
+		android.os.Process.killProcess(android.os.Process.myPid());
+	}
+}</code></pre>
+</div>

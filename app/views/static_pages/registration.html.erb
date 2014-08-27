@@ -1,0 +1,31 @@
+<div class="secondContainer">
+
+<h1>Application registration</h1>
+
+
+<h1>Obtain Localization API usage permission</h1>
+
+<p>Before using the Localization API, you need to <strong><a href="http://eek088.ust.hk:4005/users">apply</a></strong> for the permission to use the API. This is for us to better track what applications that are using the API so that we can provide the developers with relevant function and performance upgrades.</p>
+
+<p>You must provide the following information about you application to ask for the permission: </p>
+
+<ul><li><p><strong>Application name</strong></p></li><li><p><strong>Application package name</strong></p></li><li><p><strong>MD5 fingerprint of your private key to pack your application</strong> (detailed below)</p></li><li><p><strong>Application description</strong></p></li></ul>
+
+<h2>1. Obtain MD5 fingerprint</h2>
+
+<p>Similar to the mechanism in developing an application that uses the Google Maps, each developer in your team needs to obtain a MD5 fingerprint to package the application for release.</p>
+
+<p>There is two way to obtain the MD5 fingerprint of the private key.</p>
+
+<p><strong>a.</strong> If you use the eclipse, you can go to <strong>Window</strong> &gt; <strong>Preference</strong>, Open the Android tag and click the <strong>Build</strong> item, then you can find your fingerprints of the keystores. Just like the following image.</p>
+
+<p><img alt="Image1" src="/images/image1.png"/></p>
+s
+<p><strong>b.</strong> If you want to publish you application and using the keystore named &quot;publish.keystore&quot; to sign the application, you could run the follow command to get the MD5 fingerprint.</p>
+
+<blockquote><p><code>&lt;path to JDK&gt;</code>/bin/keytool -v -list -alias <code>&lt;keyname&gt;</code> -keystore <code>&lt;publish.keystore&gt;</code> -storepass <code>&lt;keystore&#39;s password&gt;</code> -keypass <code>&lt;key&#39;s password&gt;</code></p></blockquote>
+
+<p>Replace the content inside the angle brackets with yours. And then you can get the information just like the following.</p>
+
+<p><img alt="Image2" src="/images/image2.png"/></p>
+</div>

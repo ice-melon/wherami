@@ -15,6 +15,11 @@ SampleApp::Application.routes.draw do
   match '/contact', to: 'static_pages#contact', via: 'get'
   match '/guide',   to: 'static_pages#guide',   via: 'get'
   match '/download', to: 'static_pages#download',via: 'get'
+
+  match '/summary', to: 'static_pages#summary',via: 'get'
+  match '/sdk', to: 'static_pages#sdk',via: 'get'
+  match '/registration', to: 'static_pages#registration',via: 'get'
+  
   match '/mail',    to: 'static_pages#mail',    via: 'get'
 
 

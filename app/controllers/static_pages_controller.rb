@@ -18,6 +18,18 @@ class StaticPagesController < ApplicationController
 
   end
 
+  def sdk
+    
+  end
+
+  def summary
+    
+  end
+
+  def registration
+    
+  end
+
   def download
 
   end
